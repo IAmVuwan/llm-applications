@@ -67,7 +67,18 @@ EOF
         echo "Please provide the ec2 instance public dns as the second argument"
         exit
     fi
-    ssh -o IdentitiesOnly=yes -L 8888:localhost:8888 "$2"
+    chmod 400 ~/Downloads/test12.pem
+    ssh -i ~/Downloads/test12.pem -o IdentitiesOnly=yes -L 8888:localhost:8888 "$2"
+  fi
+
+  if check_arg "--connect-ec2" "${goals[@]}"; then
+    if [[ -z "$2" || -n "$2" ]];
+    then
+        echo "Please provide the ec2 instance public dns as the second argument"
+        exit
+    fi
+    chmod 400 ~/Downloads/test12.pem
+    ssh -i ~/Downloads/test12.pem "$2"
   fi
 
   if check_arg "--load-data" "${goals[@]}"; then
