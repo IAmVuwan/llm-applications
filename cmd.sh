@@ -25,12 +25,17 @@ run_goals() {
     pip install -r "${SCRIPT_DIR}/requirements.txt"
   fi
 
-  if check_arg "--start-pgvector" "${goals[@]}"; then
+  if check_arg "--docker-pgvector" "${goals[@]}"; then
     docker compose -f "${SCRIPT_DIR}/docker-compose.yaml" up -d
     docker compose -f "${SCRIPT_DIR}/docker-compose.yaml" logs
   fi
 
-  if check_arg "--set-env" "${goals[@]}"; then
+  if check_arg "--pgvector" "${goals[@]}"; then
+    chmod +x setup-pgvector.sh
+    ./setup-pgvector.sh
+  fi
+
+  if check_arg "--env" "${goals[@]}"; then
     cat <<EOF >.env
 OPENAI_API_BASE="https://api.openai.com/v1"
 OPENAI_API_KEY=""  # https://platform.openai.com/account/api-keys
@@ -42,9 +47,27 @@ EOF
 
   export EFS_DIR=$SCRIPT_DIR/build/efs
 
-  if check_arg "--start-notebook" "${goals[@]}"; then
+  if check_arg "--notebook" "${goals[@]}"; then
     source "${SCRIPT_DIR}/.venv/bin/activate"
     jupyter notebook
+  fi
+
+  if check_arg "--notebook-remote" "${goals[@]}"; then
+    source "${SCRIPT_DIR}/.venv/bin/activate"
+    jupyter notebook
+    nohup jupyter notebook --ip=0.0.0.0 --NotebookApp.allow_origin='*' --NotebookApp.disable_check_xsrf=True --NotebookApp.token='P@ssw0rd' --port 8888 \
+      >"notebook.log" </dev/null 2>&1 &
+
+    tail -f "notebook.log"
+  fi
+
+  if check_arg "--connect-notebook" "${goals[@]}"; then
+    if [[ -z "$2" || -n "$2" ]];
+    then
+        echo "Please provide the ec2 instance public dns as the second argument"
+        exit
+    fi
+    ssh -o IdentitiesOnly=yes -L 8888:localhost:8888 "$2"
   fi
 
   if check_arg "--load-data" "${goals[@]}"; then
@@ -56,12 +79,12 @@ EOF
       -P "$EFS_DIR" https://docs.ray.io/en/master/
   fi
 
-  if check_arg "--start-ray" "${goals[@]}"; then
+  if check_arg "--ray-start" "${goals[@]}"; then
     pip install -U "ray[data,train,tune,serve]"
     ray start --head
   fi
 
-  if check_arg "--infra" "${goals[@]}"; then
+  if check_arg "--infra-up" "${goals[@]}"; then
     # check pulumi is installed
     if ! command -v pulumi &> /dev/null
     then
@@ -70,6 +93,10 @@ EOF
         exit
     fi
     pulumi up
+  fi
+
+  if check_arg "--infra-down" "${goals[@]}"; then
+    pulumi down
   fi
 
 }

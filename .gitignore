@@ -110,3 +110,5 @@ docs.ray.io/
 
 # book and other source folders
 data/
+
+*.log
