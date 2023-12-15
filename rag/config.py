@@ -1,7 +1,8 @@
 from pathlib import Path
+import os
 
 # Directories
-EFS_DIR = Path("/efs/shared_storage/goku")
+EFS_DIR = os.environ["EFS_DIR"]
 ROOT_DIR = Path(__file__).parent.parent.absolute()
 
 # Mappings
