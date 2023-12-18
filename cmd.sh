@@ -107,7 +107,7 @@ EOF
   fi
 
   if check_arg "--infra-down" "${goals[@]}"; then
-    pulumi down
+    pulumi destroy
   fi
 
 }

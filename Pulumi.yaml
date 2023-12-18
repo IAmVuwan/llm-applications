@@ -7,5 +7,10 @@ resources:
       ami: ami-08be17c96d80cbd7d # Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.1.0 (Ubuntu 20.04) 20231205
       instanceType: g4dn.xlarge
       keyName: test12
+      rootBlockDevice:
+        deleteOnTermination: true
+        encrypted: false
+        volumeSize: 500
+        volumeType: gp3
       tags:
         Name: test12
