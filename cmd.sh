@@ -43,7 +43,7 @@ OPENAI_API_BASE="https://api.openai.com/v1"
 OPENAI_API_KEY=""  # https://platform.openai.com/account/api-keys
 ANYSCALE_API_BASE="https://api.endpoints.anyscale.com/v1"
 ANYSCALE_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-DB_CONNECTION_STRING="dbname=api user=myuser host=localhost password=ChangeMe port=5433"
+DB_CONNECTION_STRING="dbname=vector user=postgres host=localhost password=postgres port=5433"
 EOF
   fi
 
@@ -57,7 +57,7 @@ EOF
   if check_arg "--notebook-remote" "${goals[@]}"; then
     source "${SCRIPT_DIR}/.venv/bin/activate"
     jupyter notebook
-    nohup jupyter notebook --ip=0.0.0.0 --NotebookApp.allow_origin='*' --NotebookApp.disable_check_xsrf=True --NotebookApp.token='P@ssw0rd' --port 8888 \
+    nohup jupyter notebook --ip=0.0.0.0 --NotebookApp.allow_origin='*' --NotebookApp.disable_check_xsrf=True --port 8888 \
       >"notebook.log" </dev/null 2>&1 &
 
     tail -f "notebook.log"
