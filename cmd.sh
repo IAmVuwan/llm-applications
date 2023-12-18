@@ -23,6 +23,7 @@ run_goals() {
     python3 -m venv "${SCRIPT_DIR}/.venv"
     source "${SCRIPT_DIR}/.venv/bin/activate"
     pip install -r "${SCRIPT_DIR}/requirements.txt"
+    pip install jupyter
   fi
 
   if check_arg "--docker-pgvector" "${goals[@]}"; then
@@ -62,11 +63,6 @@ EOF
   fi
 
   if check_arg "--connect-notebook" "${goals[@]}"; then
-    if [[ -z "$2" || -n "$2" ]];
-    then
-        echo "Please provide the ec2 instance public dns as the second argument"
-        exit
-    fi
     chmod 400 ~/Downloads/test12.pem
     ssh -i ~/Downloads/test12.pem -o IdentitiesOnly=yes -L 8888:localhost:8888 "$2"
   fi
