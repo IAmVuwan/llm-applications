@@ -5,7 +5,7 @@ services:
       - 5433:5432
     volumes:
       - data:/var/lib/postgresql/data
-      - ./migrations/:/docker-entrypoint-initdb.d/
+      - ./migrations/vector-1536.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USER=postgres
