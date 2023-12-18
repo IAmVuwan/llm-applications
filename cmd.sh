@@ -16,12 +16,13 @@ check_arg() {
   return 1 # Failure: not found
 }
 
+python3 -m venv "${SCRIPT_DIR}/.venv"
+source "${SCRIPT_DIR}/.venv/bin/activate"
+
 run_goals() {
   local goals=("$@")
 
   if check_arg "--venv" "${goals[@]}"; then
-    python3 -m venv "${SCRIPT_DIR}/.venv"
-    source "${SCRIPT_DIR}/.venv/bin/activate"
     pip install -r "${SCRIPT_DIR}/requirements.txt"
     pip install jupyter
   fi
