@@ -1,5 +1,3 @@
-#!/usr/bin/env zsh
-
 set -eu
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
