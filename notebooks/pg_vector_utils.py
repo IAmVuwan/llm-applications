@@ -25,6 +25,13 @@ def drop_table():
             print("Table dropped.")
 
 
+def create_vector_type():
+    with psycopg2.connect(db_connection_string) as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("CREATE EXTENSION vector;")
+            print("Vector type created.")
+
+
 def run_migration():
     with psycopg2.connect(db_connection_string) as connection:
         with connection.cursor() as cursor:
