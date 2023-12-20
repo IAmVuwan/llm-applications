@@ -44,7 +44,6 @@ if check_arg "--infra" "$1"; then
 fi
 
 if check_arg "--init" "$1"; then
-  conda install pip
   pip install -r requirements.txt
   pip install notebook
   jupyter notebook
