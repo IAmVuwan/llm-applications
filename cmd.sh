@@ -32,6 +32,11 @@ run_goals() {
     docker compose -f "${SCRIPT_DIR}/docker-compose.yaml" logs
   fi
 
+  if check_arg "--docker-cleanup" "${goals[@]}"; then
+    # shellcheck disable=SC2046
+    docker stop $(docker ps -a -q) && docker system prune && docker volume prune && docker network prune
+  fi
+
   if check_arg "--pgvector" "${goals[@]}"; then
     chmod +x setup-pgvector.sh
     ./setup-pgvector.sh
@@ -43,19 +48,17 @@ OPENAI_API_BASE="https://api.openai.com/v1"
 OPENAI_API_KEY=""  # https://platform.openai.com/account/api-keys
 ANYSCALE_API_BASE="https://api.endpoints.anyscale.com/v1"
 ANYSCALE_API_KEY=""  # https://app.endpoints.anyscale.com/credentials
-DB_CONNECTION_STRING="dbname=vector user=postgres host=localhost password=postgres port=5433"
+DB_CONNECTION_STRING="dbname=vectordb user=testuser host=localhost password=testpwd port=5433"
 EOF
   fi
 
   export EFS_DIR=$SCRIPT_DIR/build/efs
 
   if check_arg "--notebook" "${goals[@]}"; then
-    source "${SCRIPT_DIR}/.venv/bin/activate"
     jupyter notebook
   fi
 
   if check_arg "--notebook-remote" "${goals[@]}"; then
-    source "${SCRIPT_DIR}/.venv/bin/activate"
     jupyter notebook
     nohup jupyter notebook --ip=0.0.0.0 --NotebookApp.allow_origin='*' --NotebookApp.disable_check_xsrf=True --port 8888 \
       >"notebook.log" </dev/null 2>&1 &

@@ -3,8 +3,6 @@ services:
     image: ankane/pgvector
     ports:
       - 5433:5432
-    volumes:
-      - ./migrations/vector-1536.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_DB=vectordb
       - POSTGRES_USER=testuser
