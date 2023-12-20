@@ -64,7 +64,7 @@ if check_arg "--data" "$1"; then
   rm -rf "$EFS_DIR"
   mkdir -p "$EFS_DIR"
   wget -e robots=off --recursive --no-clobber --page-requisites \
-    --html-extension --convert-links --restrict-file-names=linux \
+    --html-extension --convert-links --restrict-file-names=unix \
     --domains docs.ray.io --no-parent --accept=html \
     -P "$EFS_DIR" https://docs.ray.io/en/master/
 fi
