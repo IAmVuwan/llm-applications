@@ -22,6 +22,7 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 #eval "$("$HOME/miniforge3/bin/conda" "shell.$SHELL_NAME" hook)"
 #conda create --name="pt" "python<3.11"
 #conda activate pt
+#conda install pip
 python3 -m venv "${SCRIPT_DIR}/.venv"
 source "${SCRIPT_DIR}/.venv/bin/activate"
 export EFS_DIR=$SCRIPT_DIR/build/efs
