@@ -53,7 +53,7 @@ if check_arg "--init" "$1"; then
 fi
 
 if check_arg "--ray" "$1"; then
-  pip install -U "ray"
+  pip install -U "ray[data,train,tune,serve]"
   ray start --head
 fi
 
