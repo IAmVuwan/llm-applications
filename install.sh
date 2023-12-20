@@ -38,6 +38,10 @@ check_arg() {
   return 1 # Failure: not found
 }
 
+if check_arg "--infra" "$1"; then
+  pulumi up
+fi
+
 if check_arg "--init" "$1"; then
   conda install pip
   pip install -r requirements.txt
@@ -64,6 +68,16 @@ if check_arg "--data" "$1"; then
     -P "$EFS_DIR" https://docs.ray.io/en/master/
 fi
 
-if check_arg "--infra" "$1"; then
-  pulumi up
+if check_arg "--connect" "$1"; then
+  if [[ -z "$2" || -n "$2" ]];
+  then
+      echo "Please provide the private key as the second argument"
+      exit
+  fi
+  if [[ -z "$3" || -n "$3" ]];
+  then
+      echo "Please provide the ec2 instance public dns as the third argument"
+      exit
+  fi
+  ssh -i "$2" -o IdentitiesOnly=yes -L 8888:localhost:8888 "$3"
 fi
