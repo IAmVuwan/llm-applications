@@ -66,6 +66,7 @@ if check_arg "--data" "$1"; then
   : "$EFS_DIR"
   rm -rf "$EFS_DIR"
   mkdir -p "$EFS_DIR"
+  mkdir -p "$EFS_DIR/sql_dumps"
   wget -e robots=off --recursive --no-clobber --page-requisites \
     --html-extension --convert-links --restrict-file-names=unix \
     --domains docs.ray.io --no-parent --accept=html \
