@@ -21,7 +21,7 @@ fi
 
 SHELL_NAME=$(basename "$SHELL")
 eval "$("$HOME/miniforge3/bin/conda" "shell.$SHELL_NAME" hook)"
-conda create --name="pt" "python=3.8.16"
+conda create --name="pt" "python<3.11"
 conda activate pt
 conda install pip
 

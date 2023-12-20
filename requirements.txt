@@ -29,4 +29,3 @@ flake8
 Flake8-pyproject
 isort
 pyupgrade
-pydantic<2
