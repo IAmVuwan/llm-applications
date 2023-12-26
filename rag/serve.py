@@ -18,7 +18,7 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from starlette.responses import StreamingResponse
 
-from rag.config import EFS_DIR, EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
+from rag.config import EMBEDDING_DIMENSIONS, MAX_CONTEXT_LENGTHS
 from rag.generate import QueryAgent
 from rag.index import build_or_load_index
 
@@ -225,7 +225,7 @@ class RayAssistantDeployment:
 deployment = RayAssistantDeployment.bind(
     chunk_size=700,
     chunk_overlap=50,
-    num_chunks=9,
+    num_chunks=50, # these will be filtered by rerank_k below
     embedding_model_name=os.environ["RAY_ASSISTANT_EMBEDDING_MODEL"],
     embedding_dim=EMBEDDING_DIMENSIONS["thenlper/gte-large"],
     use_lexical_search=False,
@@ -233,7 +233,7 @@ deployment = RayAssistantDeployment.bind(
     use_reranking=True,
     rerank_threshold=0.9,
     rerank_k=9,
-    llm="codellama/CodeLlama-34b-Instruct-hf",
+    llm="mistralai/Mixtral-8x7B-Instruct-v0.1",
     sql_dump_fp=Path(os.environ["RAY_ASSISTANT_INDEX"]),
 )
 
