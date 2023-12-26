@@ -67,7 +67,7 @@ fi
 
 if check_arg "--cluster" "$1"; then
   pip install boto3
-  ray up cluster.yaml
+  ray up cluster.yaml --no-config-cache
 fi
 
 if check_arg "--cluster-attach" "$1"; then
