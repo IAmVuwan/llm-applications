@@ -4,6 +4,7 @@ max_workers: 3
 provider:
   type: aws
   region: us-east-1
+  cache_stopped_nodes: False
 auth:
   ssh_user: ubuntu
 available_node_types:
