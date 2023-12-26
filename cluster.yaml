@@ -29,3 +29,5 @@ available_node_types:
           Ebs:
             VolumeSize: 200
             VolumeType: gp3
+setup_commands:
+  - pip install "ray[data,train,tune,serve]"

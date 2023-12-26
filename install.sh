@@ -21,12 +21,16 @@ fi
 
 SHELL_NAME=$(basename "$SHELL")
 eval "$("$HOME/miniforge3/bin/conda" "shell.$SHELL_NAME" hook)"
-conda create --name="pt" "python<3.11"
-conda activate pt
-conda install pip
 
-#python3 -m venv "${SCRIPT_DIR}/.venv"
-#source "${SCRIPT_DIR}/.venv/bin/activate"
+if [ ! -d "$HOME/miniforge3/envs/pt" ]; then
+  conda create --name="pt" "python<3.11"
+  conda activate pt
+  conda install pip
+  exit 0
+else
+  conda activate pt
+fi
+
 export EFS_DIR=$SCRIPT_DIR/build/efs
 mkdir -p "$EFS_DIR"
 
@@ -54,7 +58,6 @@ fi
 
 if check_arg "--ray" "$1"; then
   pip install "ray[data,train,tune,serve]"
-  ray start --head
 fi
 
 if check_arg "--docker" "$1"; then
@@ -63,7 +66,6 @@ if check_arg "--docker" "$1"; then
 fi
 
 if check_arg "--cluster" "$1"; then
-  pip install -U ray[default]
   pip install boto3
   ray up cluster.yaml
   ray attach cluster.yaml
