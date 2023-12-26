@@ -10,8 +10,8 @@ available_node_types:
   ray.head.default:
     resources: {}
     node_config:
-      InstanceType: m5.large
-      ImageId: ami-0387d929287ab193e
+      InstanceType: g4dn.xlarge
+      ImageId: ami-08be17c96d80cbd7d
       KeyName: gtest
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
@@ -30,17 +30,3 @@ available_node_types:
           Ebs:
             VolumeSize: 200
             VolumeType: gp3
-
-file_mounts:
-  "/home/ubuntu/llm-applications": "./"
-
-rsync_exclude:
-  - "**/.git"
-  - "**/.git/**"
-  - "**/.venv"
-  - "**/.venv/**"
-  - "**/.idea"
-  - "**/.idea/**"
-
-rsync_filter:
-  - ".gitignore"
