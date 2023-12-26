@@ -23,7 +23,7 @@ available_node_types:
     resources: {}
     node_config:
       InstanceType: g4dn.xlarge
-      ImageId: ami-08be17c96d80cbd7d # Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.1.0 (Ubuntu 20.04) 20231205
+      ImageId: ami-08be17c96d80cbd7d
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
           Ebs:
