@@ -1,16 +1,16 @@
-name: test12
+name: gtest
 runtime: yaml
 resources:
   testInstance:
     type: aws:ec2:Instance
     properties:
       ami: ami-08be17c96d80cbd7d # Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.1.0 (Ubuntu 20.04) 20231205
-      instanceType: g4dn.xlarge
-      keyName: test12
+      instanceType: m5.xlarge
+      keyName: gtest
       rootBlockDevice:
         deleteOnTermination: true
         encrypted: false
-        volumeSize: 500
+        volumeSize: 200
         volumeType: gp3
       tags:
-        Name: test12
+        Name: gtest
