@@ -62,6 +62,13 @@ if check_arg "--docker" "$1"; then
   docker compose logs -f
 fi
 
+if check_arg "--cluster" "$1"; then
+  pip install -U ray[default]
+  pip install boto3
+  ray up cluster.yaml
+  ray attach cluster.yaml
+fi
+
 if check_arg "--data" "$1"; then
   : "$EFS_DIR"
   rm -rf "$EFS_DIR"
