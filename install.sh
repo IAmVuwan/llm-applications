@@ -2,34 +2,34 @@ set -eu
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
-#if [ ! -d "$HOME/miniforge3" ]; then
-#
-#  # check os architecture and download the appropriate miniforge installer
-#  if [ "$(uname -m)" = "x86_64" ]; then
-#    curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
-#    sh Miniforge3-Linux-x86_64.sh
-#    rm Miniforge3-Linux-x86_64.sh
-#    exit 0
-#  elif [ "$(uname -m)" = "arm64" ]; then
-#    curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
-#    sh Miniforge3-MacOSX-arm64.sh
-#    rm Miniforge3-MacOSX-arm64.sh
-#    exit 0
-#  fi
-#
-#fi
-#
-#SHELL_NAME=$(basename "$SHELL")
-#eval "$("$HOME/miniforge3/bin/conda" "shell.$SHELL_NAME" hook)"
-#
-#if [ ! -d "$HOME/miniforge3/envs/pt" ]; then
-#  conda create --name="pt" "python<3.11"
-#  conda activate pt
-#  conda install pip
-#  exit 0
-#else
-#  conda activate pt
-#fi
+if [ ! -d "$HOME/miniforge3" ]; then
+
+  # check os architecture and download the appropriate miniforge installer
+  if [ "$(uname -m)" = "x86_64" ]; then
+    curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+    sh Miniforge3-Linux-x86_64.sh
+    rm Miniforge3-Linux-x86_64.sh
+    exit 0
+  elif [ "$(uname -m)" = "arm64" ]; then
+    curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh
+    sh Miniforge3-MacOSX-arm64.sh
+    rm Miniforge3-MacOSX-arm64.sh
+    exit 0
+  fi
+
+fi
+
+SHELL_NAME=$(basename "$SHELL")
+eval "$("$HOME/miniforge3/bin/conda" "shell.$SHELL_NAME" hook)"
+
+if [ ! -d "$HOME/miniforge3/envs/pt" ]; then
+  conda create --name="pt" "python<3.11"
+  conda activate pt
+  conda install pip
+  exit 0
+else
+  conda activate pt
+fi
 
 export EFS_DIR=$SCRIPT_DIR/build/efs
 mkdir -p "$EFS_DIR"
