@@ -5,7 +5,7 @@ resources:
     type: aws:ec2:Instance
     properties:
       ami: ami-08be17c96d80cbd7d # Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.1.0 (Ubuntu 20.04) 20231205
-      instanceType: p3.2xlarge
+      instanceType: g4dn.xlarge
       keyName: gtest
       rootBlockDevice:
         deleteOnTermination: true
