@@ -24,7 +24,7 @@ available_node_types:
   ray.head.default:
     resources: {}
     node_config:
-      InstanceType: t2.xlarge
+      InstanceType: g4dn.xlarge
       ImageId: ami-08be17c96d80cbd7d
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
@@ -35,7 +35,7 @@ available_node_types:
     min_workers: 1
     resources: {}
     node_config:
-      InstanceType: t2.xlarge
+      InstanceType: g4dn.xlarge
       ImageId: ami-08be17c96d80cbd7d
 
 # Specify the node type of the head node (as configured above).
